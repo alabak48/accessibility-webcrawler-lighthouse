@@ -1,6 +1,6 @@
 # Accessibility Web Crawler with Lighthouse
 
-A web accessibility crawler that utilizes both JavaScript and Python to assess and generate accessibility reports for specified websites.
+A web accessibility crawler that utilizes both JavaScript and Python to assess and generate accessibility reports in JSON format for specified websites.
 
 ## Requirements
 - Pycharm Community Edition
