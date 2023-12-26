@@ -1,0 +1,19 @@
+{
+  "name": "testpristupacnost",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/core": "^7.23.6",
+    "@babel/preset-env": "^7.23.6",
+    "chrome-launcher": "^1.1.0",
+    "lighthouse": "^11.3.0",
+    "node-polyglot": "^2.5.0",
+    "p-limit": "^5.0.0"
+  }
+}
