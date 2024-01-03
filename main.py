@@ -4,6 +4,8 @@ import subprocess
 import time
 
 start_time = time.time()
+
+
 def run_node_script(script_path, *args):
     command = ['node', script_path, *map(str, args)]
     result = subprocess.run(command)
@@ -16,7 +18,7 @@ def process_website(url, index):
     print(f"Output for {url}: {output}")
 
 
-js_module_path =  os.path.join(os.getcwd(), 'app.mjs')
+js_module_path = os.path.join(os.getcwd(), 'app.mjs')
 
 websites = [
     'https://www.mefos.unios.hr/index.php/hr/',
