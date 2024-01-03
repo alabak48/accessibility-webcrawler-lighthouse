@@ -3,7 +3,7 @@
 import requests
 from bs4 import BeautifulSoup
 
-domena = 'uniosik.hr';
+domena = 'unios.hr';
 
 url = 'https://unios.hr'
 postoji=True
@@ -25,9 +25,9 @@ except:
 if (postoji):
     try:
         print('dentificirana početna stranica: ' + reqs.url)
-        soup = BeautifulSoup(reqs.text, 'html.parser')
-        urls = []
-        for link in soup.find_all('a'):
-            print(link.get('href'))
+        #soup = BeautifulSoup(reqs.text, 'html.parser')
+        #urls = []
+        #for link in soup.find_all('a'):
+        #    print(link.get('href'))
     except:
         print('Neki problem - ručno provjeriti takve')

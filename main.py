@@ -31,7 +31,7 @@ websites = [
     'https://www.ffos.unios.hr/'
 ]
 
-max_threads = 5
+max_threads = 10
 
 with concurrent.futures.ThreadPoolExecutor(max_threads) as executor:
     futures = [executor.submit(process_website, url, websites.index(url)) for url in websites]
