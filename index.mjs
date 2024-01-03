@@ -8,8 +8,7 @@ async function runLighthouse(url, index) {
   const chrome = await launch({ chromeFlags: ['--headless'] });
   const options = { 
     logLevel: 'error', 
-    output: 'json', 
-    onlyCategories: ['accessibility'],
+    output: 'json',
     port: chrome.port 
   };
 
@@ -17,22 +16,9 @@ async function runLighthouse(url, index) {
     const runnerResult = await lighthouse(url, options);
 
     // JSON Report
-    const requestedUrl = runnerResult.lhr.requestedUrl;
-    const finalUrl = runnerResult.lhr.finalUrl;
-    const audits = runnerResult.lhr.audits;
-    const categories = runnerResult.lhr.categories;
+    const reportJson = runnerResult.report;
 
-    // Create an object with the extracted data
-    const resultData = {
-      requestedUrl,
-      finalUrl,
-      audits,
-      categories,
-    };
-
-    // Convert the object to JSON and save to a file
-    const resultJson = JSON.stringify(resultData, null, 2);
-    fs.writeFileSync(index + '.json', resultJson);
+    fs.writeFileSync(index + '.json', reportJson);
 
     // ovdje ćemo slati podatke na API
 
