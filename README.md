@@ -23,3 +23,10 @@ Run main.py
 - Na pronađenim poveznicama prve i druge razine identificirati poddomene
 - na svakoj domeni i poddomeni provesti LightHouse magiju i podatke spremiti u bazu
 - analizirati podatke
+
+## procjenjeno vrijeme istraživanja
+112.64327383041382 seconds za 10 domena, jedna domena 13 sekundi
+110.000 domena * 13 = 1430000 sekunde = 398 sati
+Jedno računalo u jednom satu odradi ((60 * 60) / 13) 277 domena
+Dvije učionice na FFOS ukupno 50 računala u jednom satu 13850 domena
+Na bazi 50 računala (110.000 domena / 13850 po satu) daje 8 sati - jedna subota i gotovi smo

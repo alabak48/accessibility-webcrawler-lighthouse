@@ -1,8 +1,9 @@
 import concurrent.futures
 import os
 import subprocess
+import time
 
-
+start_time = time.time()
 def run_node_script(script_path, *args):
     command = ['node', script_path, *map(str, args)]
     result = subprocess.run(command)
@@ -36,3 +37,5 @@ with concurrent.futures.ThreadPoolExecutor(max_threads) as executor:
     futures = [executor.submit(process_website, url, websites.index(url)) for url in websites]
 
     concurrent.futures.wait(futures)
+
+print("--- %s seconds ---" % (time.time() - start_time))
