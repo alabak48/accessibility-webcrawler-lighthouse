@@ -1,4 +1,7 @@
 # Default ignored files
 /shelf/
+JakopecTestPodaci
 /workspace.xml
 node_modules
+.idea/accessiblity-webcrawler-lighthouse.iml
+.idea/misc.xml
