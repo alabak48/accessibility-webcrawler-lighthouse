@@ -3,31 +3,44 @@
 import requests
 from bs4 import BeautifulSoup
 
-domena = 'unios.hr';
+file = open('domene.txt', 'r')
+Lines = file.readlines()
 
-url = 'https://unios.hr'
-postoji=True
-try:
-    reqs = requests.get('https://' + domena)
-except:
+count = 0
+# Strips the newline character
+
+
+for line in Lines:
+    count += 1
+    print("Line{}: {}".format(count, line.strip()))
+    domena = line.strip()
+    postoji = True
     try:
-        reqs = requests.get('http://' + domena)
+        reqs = requests.get('https://' + domena)
     except:
         try:
-            reqs = requests.get('https://www.' + domena)
+            reqs = requests.get('http://' + domena)
         except:
             try:
-                reqs = requests.get('http://www.' + domena)
+                reqs = requests.get('https://www.' + domena)
             except:
-                print('Domena ne postoji - ručno provjeriti takve')
-                postoji=False
+                try:
+                    reqs = requests.get('http://www.' + domena)
+                except:
+                    postoji = False
+    file1 = open('domenePobrano.txt', 'a')
+    if (postoji):
+        try:
+            file1.write('(\'' + domena +'\',\'' + reqs.url +'\'),\n')
+            print(domena,',', reqs.url)
+        except:
+            file1.write('(\'' +domena + '\',null),\n')
+            print(domena,',null')
+    else:
+        file1.write('(\'' +domena + '\',null),\n')
+        print(domena,',null')
+    file1.close()
 
-if (postoji):
-    try:
-        print('dentificirana početna stranica: ' + reqs.url)
-        #soup = BeautifulSoup(reqs.text, 'html.parser')
-        #urls = []
-        #for link in soup.find_all('a'):
-        #    print(link.get('href'))
-    except:
-        print('Neki problem - ručno provjeriti takve')
+
+
+
