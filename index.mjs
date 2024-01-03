@@ -26,8 +26,23 @@ async function runLighthouse(url, index) {
     const runnerResult = await lighthouse(url, options);
 
     // JSON Report
-    const reportJson = runnerResult.report;
-    fs.writeFileSync(index + '.json', reportJson);
+    const requestedUrl = runnerResult.lhr.requestedUrl;
+    const finalUrl = runnerResult.lhr.finalUrl;
+    const audits = runnerResult.lhr.audits;
+    const categories = runnerResult.lhr.categories;
+
+    // Create an object with the extracted data
+    const resultData = {
+      requestedUrl,
+      finalUrl,
+      audits,
+      categories,
+    };
+
+    // Convert the object to JSON and save to a file
+    const resultJson = JSON.stringify(resultData, null, 2);
+    fs.writeFileSync(index + '.json', resultJson);
+
     // ovdje ćemo slati podatke na API
 
     // `.lhr` is the Lighthouse Result as a JS object
