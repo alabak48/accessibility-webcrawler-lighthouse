@@ -19,6 +19,7 @@ async function runLighthouse(url, index) {
     // JSON Report
     const reportJson = runnerResult.report;
     fs.writeFileSync(index + '.json', reportJson);
+    // ovdje ćemo slati podatke na API
 
     // `.lhr` is the Lighthouse Result as a JS object
     console.log('Report is done for', runnerResult.lhr.finalUrl);
