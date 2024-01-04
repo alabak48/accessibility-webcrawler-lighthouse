@@ -30,3 +30,16 @@ Run main.py
 Jedno računalo u jednom satu odradi ((60 * 60) / 13) 277 domena
 Dvije učionice na FFOS ukupno 50 računala u jednom satu 13850 domena
 Na bazi 50 računala (110.000 domena / 13850 po satu) daje 8 sati - jedna subota i gotovi smo
+
+# status domene
+0. početni status
+1. u tijeku je traženje stvarne domene
+2. stvarna domena razriješena (ili posotoji ili je NULL)
+3. u tijeku traženje poddomena
+4. poddomene razriješene
+5. u tijeku je lighthouse magija
+6. lighthouse magija odrađena
+7. KASNIJE
+8. KASNIJE
+9. KASNIJE
+10. Ne pobire se jer stvarna domena vodi izvan .hr domene
