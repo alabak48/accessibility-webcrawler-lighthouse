@@ -89,9 +89,9 @@ def process_website_API(index):
                     pass
             jsonpd = json.dumps(zaAPI)
             #print('Poddomene na API: ' + jsonpd)
-            data = {'id': id,'poddomene': jsonpd, 'analiziranopoveznica': len(poveznice2)}
+            data = {'id': id,'poddomene': jsonpd, 'analiziranopoveznica': len(posjecenepoveznice)}
             requests.post(url='https://ozizprivremeno.xyz/S04_pohraniPD.php', data=data)
-            print(f"Odradio({index}) {id}: {domena} -> {len(poveznice2)}")
+            print(f"Odradio({index}) {id}: {domena} -> {len(posjecenepoveznice)}")
 
 
 max_threads = 100

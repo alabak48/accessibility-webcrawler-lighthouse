@@ -28,5 +28,13 @@ stvarnadomena varchar(255)
 
 alter table poddomena add foreign key (domena) references stvarnadomena(id);
 
+create table domena_stvarnadomena(
+domena int not null,
+stvarnadomena int not null
+);
+
+alter table domena_stvarnadomena add foreign key (domena) references domena(id);
+alter table domena_stvarnadomena add foreign key (stvarnadomena) references stvarnadomena(id);
+
 insert into stvarnadomena values
 select distinct stvarnadomena from domena where status=2 and stvarnadomena is not null;
