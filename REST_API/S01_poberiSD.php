@@ -15,7 +15,7 @@ $stm = $pdo->prepare("update domena set "
         . " datumpocetka=now(), "
         . " uuid=:uuid, "
         . " status=1 "
-        . " where status=0 and uuid is null limit 10");
+        . " where status=0 and uuid is null limit 1");
 $stm->execute([
     'uuid' => $uuid
 ]);

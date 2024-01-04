@@ -79,7 +79,7 @@ def process_website(data_json):
 file = open('domene.txt', 'r')
 lines = file.readlines()
 
-max_threads = 100
+max_threads = 121
 
 
 with concurrent.futures.ThreadPoolExecutor(max_threads) as executor:
