@@ -10,7 +10,10 @@ import json
 def process_website_API(index):
     while (True):
         response = urlopen('https://ozizprivremeno.xyz/S03_poberiPD.php')
-        niz = json.loads(response.read())
+        if response.status==200:
+            niz = json.loads(response.read())
+        else:
+            return
         for data_json in niz:
             id=data_json.get('id')
             url = data_json.get('naziv')
