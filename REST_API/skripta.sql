@@ -70,7 +70,7 @@ update stvarnadomena set uuid=null, status=0, datumpocetka=null, datumkraja=null
 
 update stvarnadomena set uuid=null, status=0, datumpocetka=null, datumkraja=null, sekundi=null, racunalo=null where id=51445;
 
-update stvarnadomena set uuid=null, status=0, datumpocetka=null, datumkraja=null, sekundi=null, racunalo=null where status=2 and datumpocetka is null;
+update stvarnadomena set uuid=null, status=0, datumpocetka=null, datumkraja=null, sekundi=null, racunalo=null where datumpocetka<'2024-01-07 19:00:00' and status=1;
 
 # na čemu nije našao niti jednu poveznicu - vidjeti zašto nije našao i ako treba ponovo
 select a.naziv from stvarnadomena a left join poveznica b on a.id=b.domena where b.domena is null and a.status=2;

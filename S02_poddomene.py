@@ -168,9 +168,12 @@ def poberi(index,id, url):
             'domene': json_sve_domene,
             'sekundi': sekundi,
             'racunalo': racunalo}
+    uk = 0
+    for p in posjecenepoveznice:
+        uk = uk + 1
     rez = requests.post(url='https://ozizprivremeno.xyz/S04_pohraniPD.php', data=data)
     # print(rez.status_code)
-    print(f"Odradio({index}) {id}: {domena} -> ", sekundi, 's')
+    print(f"Odradio({index}) {id}: {domena} -> ", sekundi, 's, poveznica: ', uk)
 
 def process_website_API(index):
     while True:
