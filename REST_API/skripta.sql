@@ -68,4 +68,9 @@ alter table svedomene add foreign key (domena) references stvarnadomena(id);
 # reset onih koji nisu završili pri traženju poddomena
 update stvarnadomena set uuid=null, status=0, datumpocetka=null, datumkraja=null, sekundi=null, racunalo=null where status=1;
 
+update stvarnadomena set uuid=null, status=0, datumpocetka=null, datumkraja=null, sekundi=null, racunalo=null where id=31152;
 
+
+
+# na čemu nije našao niti jednu poveznicu - vidjeti zašto nije našao i ako treba ponovo
+select a.naziv from stvarnadomena a left join poveznica b on a.id=b.domena where b.domena is null and a.status=2;
