@@ -43,3 +43,7 @@ Na bazi 50 računala (110.000 domena / 13850 po satu) daje 8 sati - jedna subota
 8. KASNIJE
 9. KASNIJE
 10. Ne pobire se jer stvarna domena vodi izvan .hr domene
+
+
+# Ograničenja
+BeautifulSoup ne pronalazi poveznice koje se generiraju putem JS (tipa document.write('<a href="urls">Tekst</a>'))

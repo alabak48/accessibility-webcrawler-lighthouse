@@ -10,22 +10,60 @@ include_once 'veza.php';
 if(isset($_POST['id'])){
     $pdo->beginTransaction();
     $stm = $pdo->prepare("update stvarnadomena set "
-            . " analiziranopoveznica=:analiziranopoveznica, "
-            . " status=2 "
+            . " datumkraja=now(), "
+            . " status=2, "
+            . " sekundi=:sekundi,"
+            . " racunalo=:racunalo"
             . " where id=:id");
     $stm->execute([
-        'analiziranopoveznica' => $_POST['analiziranopoveznica'],
-        'id' => $_POST['id']
+        'id' => $_POST['id'],
+        'sekundi'=>$_POST['sekundi'],
+        'racunalo'=>$_POST['racunalo']
     ]);
 
-    $poddomene =json_decode($_POST['poddomene']);
-    foreach ($poddomene as $pd) {
-        $stm = $pdo->prepare("insert into poddomena (naziv,domena) values "
-            . " (:pd,:id) ");
+    $lista =json_decode($_POST['poddomene']);
+    foreach ($lista as $stavka) {
+        $stm = $pdo->prepare("insert into poddomena (domena,naziv) values "
+            . " (:domena,:naziv) ");
         $stm->execute([
-            'pd' => $pd,
-            'id' => $_POST['id']
+            'domena' => $_POST['id'],
+            'naziv' => $stavka
         ]);
     }
+
+    $lista =json_decode($_POST['poveznice']);
+    foreach ($lista as $stavka) {
+        $stm = $pdo->prepare("insert into poveznica (domena,url,dugiurl) values "
+            . " (:domena,:url,:dugiurl) ");
+        if(strlen($stavka)>254){
+            $stm->execute([
+                'domena' => $_POST['id'],
+                'url' => substr($pd,0,254),
+                'dugiurl'=>$stavka
+
+            ]);
+        }
+        else{
+            $stm->execute([
+                'domena' => $_POST['id'],
+                'url' =>$stavka,
+                'dugiurl'=>null,
+            ]);
+        }
+    }
+
+
+    $lista =json_decode($_POST['domene']);
+    foreach ($lista as $stavka) {
+        $stm = $pdo->prepare("insert into svedomene (domena,url) values "
+            . " (:domena,:url); ");
+            $stm->execute([
+                'domena' => $_POST['id'],
+                'url' => $stavka
+
+            ]);
+    }
+
+
     $pdo->commit();
 }
