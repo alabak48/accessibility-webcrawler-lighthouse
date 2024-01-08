@@ -187,7 +187,7 @@ def process_website_API(index):
 
 
 # izvođenje
-max_threads = 500
+max_threads = 100
 with concurrent.futures.ThreadPoolExecutor(max_threads) as executor:
     futures = [executor.submit(process_website_API, index) for index in range(max_threads)]
     concurrent.futures.wait(futures)
