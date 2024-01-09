@@ -139,8 +139,8 @@ def poberi(index,id, url):
         # 3. razina - zbog adresara na skole.hr
         # print('Ukupno poveznice2  za 3. razinu: ', len(poveznice2))
         #privremeno - makni
-        if len(poveznice2)>1000:
-            return
+        #if len(poveznice2)>1000:
+        #    return
         b = 0
         for p in poveznice2:
             b = b + 1
