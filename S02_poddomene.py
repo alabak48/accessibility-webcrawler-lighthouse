@@ -108,7 +108,7 @@ def poberi(index,id, url):
                 #print('Greška level 0: ', error)
                 pass
         # print('Ukupno posjecenepoveznice 1: ', len(posjecenepoveznice))
-        if len(poveznice)>50: # makni kasnije
+        if len(poveznice)>100: # makni kasnije
             return
         # 2. razina
         poveznice2 = set()
@@ -139,13 +139,13 @@ def poberi(index,id, url):
         # 3. razina - zbog adresara na skole.hr
         # print('Ukupno poveznice2  za 3. razinu: ', len(poveznice2))
         #privremeno - makni
-        if len(poveznice2)>500:
+        if len(poveznice2)>1000:
             return
         b = 0
         for p in poveznice2:
             b = b + 1
             try:
-                print('R2 ', b, '/', len(poveznice2), ' -> ', len(jedinstvenedomene), ', ', p)
+                #print('R2 ', b, '/', len(poveznice2), ' -> ', len(jedinstvenedomene), ', ', p)
                 reqs = requests.get(p, verify=False)
                 soup = BeautifulSoup(reqs.text, 'html.parser')
                 for link in soup.find_all('a'):
