@@ -26,6 +26,7 @@ def datoteka(poveznica):
             or poveznica.endswith('.gz')
             or poveznica.endswith('.rtf')
             or poveznica.endswith('.mp3')
+            or poveznica.endswith('.mp4')
             or poveznica.endswith('.mov'))
 
 def istapoveznica(prvi,drugi):
@@ -83,6 +84,9 @@ def poberi(index,id, url):
     poveznice = set()
     try:
         reqs = requests.get(url, verify=False)
+        if reqs.status_code!=200:
+            print('Greška status ', reqs.status_code)
+            return
         # print(reqs.text)
 
         soup = BeautifulSoup(reqs.text, 'html.parser')
@@ -100,7 +104,8 @@ def poberi(index,id, url):
                 #print('Greška level 0: ', error)
                 pass
         # print('Ukupno posjecenepoveznice 1: ', len(posjecenepoveznice))
-
+        if len(poveznice)>50: # makni kasnije
+            return
         # 2. razina
         poveznice2 = set()
         b = 0
@@ -129,11 +134,14 @@ def poberi(index,id, url):
         # print('Ukupno posjecenepoveznice 2: ', domena ,' - ', len(posjecenepoveznice),' - ', b, '/', len(poveznice))
         # 3. razina - zbog adresara na skole.hr
         # print('Ukupno poveznice2  za 3. razinu: ', len(poveznice2))
+        #privremeno - makni
+        #if len(poveznice2)>200:
+        #    return
         b = 0
         for p in poveznice2:
             b = b + 1
             try:
-                #print('R2 ', b, '/', len(poveznice2), ' -> ', len(jedinstvenedomene), ', ', p)
+                print('R2 ', b, '/', len(poveznice2), ' -> ', len(jedinstvenedomene), ', ', p)
                 reqs = requests.get(p, verify=False)
                 soup = BeautifulSoup(reqs.text, 'html.parser')
                 for link in soup.find_all('a'):
