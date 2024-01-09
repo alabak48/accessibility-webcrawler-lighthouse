@@ -22,6 +22,8 @@ def datoteka(poveznica):
             or poveznica.endswith('.docx')
             or poveznica.endswith('.doc')
             or poveznica.endswith('.xlsx')
+            or poveznica.endswith('.pptx')
+            or poveznica.endswith('.ppt')
             or poveznica.endswith('.xls')
             or poveznica.endswith('.zip')
             or poveznica.endswith('.gz')
@@ -136,8 +138,8 @@ def poberi(index,id, url):
         # 3. razina - zbog adresara na skole.hr
         # print('Ukupno poveznice2  za 3. razinu: ', len(poveznice2))
         #privremeno - makni
-        #if len(poveznice2)>200:
-        #    return
+        if len(poveznice2)>500:
+            return
         b = 0
         for p in poveznice2:
             b = b + 1
@@ -190,6 +192,9 @@ def process_website_API(index):
         if response.status == 200:
             niz = json.loads(response.read())
         else:
+            return
+        if len(niz)==0:
+            print('Završio ', index)
             return
         for data_json in niz:
             poberi(index,data_json.get('id'),data_json.get('naziv'))
