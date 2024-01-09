@@ -26,6 +26,7 @@ def datoteka(poveznica):
             or poveznica.endswith('.ppt')
             or poveznica.endswith('.xls')
             or poveznica.endswith('.zip')
+            or poveznica.endswith('.rar')
             or poveznica.endswith('.gz')
             or poveznica.endswith('.rtf')
             or poveznica.endswith('.mp3')
