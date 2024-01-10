@@ -89,7 +89,7 @@ def poberi(index,id, url):
     try:
         reqs = requests.get(url, verify=False)
         if reqs.status_code!=200:
-            print('Greška status ', reqs.status_code)
+            print('Greška status ', reqs.status_code, ' na ', id , domena)
             return
         # print(reqs.text)
 
