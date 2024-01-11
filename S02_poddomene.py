@@ -77,8 +77,8 @@ def poberi(index,id, url):
     # url = 'https://www.unisb.hr/'
     if url.endswith('/'):
         url = url[:-1]
-    if not url.endswith('.hr'):
-        return
+    #if not url.endswith('.hr'): # Na kraju su mi ostali oni koji imaju u url npr. /hr/ a hr domene su, riješio sam analizom
+    #    return
     # print(url)
     domena = urlparse(url).netloc
     domena = domena.replace('www.', '')
@@ -90,6 +90,9 @@ def poberi(index,id, url):
         reqs = requests.get(url, verify=False)
         if reqs.status_code!=200:
             print('Greška status ', reqs.status_code, ' na ', id , domena)
+            data = {'id': id,
+                    'uuid': reqs.status_code}
+            rez = requests.post(url='https://ozizprivremeno.xyz/S10_pohraniPDSTATUSNE200.php', data=data)
             return
         # print(reqs.text)
 
@@ -199,12 +202,14 @@ def process_website_API(index):
         if len(niz)==0:
             print('Završio ', index)
             return
+        else:
+            print('Server vratio ',len(niz),'domena')
         for data_json in niz:
             poberi(index,data_json.get('id'),data_json.get('naziv'))
 
 
 # izvođenje
-max_threads = 30
+max_threads = 100
 with concurrent.futures.ThreadPoolExecutor(max_threads) as executor:
     futures = [executor.submit(process_website_API, index) for index in range(max_threads)]
     concurrent.futures.wait(futures)
