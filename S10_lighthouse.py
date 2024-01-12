@@ -80,9 +80,12 @@ def run_node_script(script_path, *args):
 
 def process_website(index):
     print('krenuo ', index)
+    b=0
     while True:
+        b=b+1
+        print(b,'prolaz u niti',index)
         response = urlopen('https://ozizprivremeno.xyz/S20_poberiLighthouse.php')
-        #print(response.status)
+        print('status servera kada se traže nove domene za pobiranje:',response.status)
         if response.status == 200:
             niz = json.loads(response.read())
         else:
