@@ -17,6 +17,8 @@ def run_node_script(script_path, *args):
     command = ['node', script_path, *map(str, args)]
     #print(command[3] + '.json')
     subprocess.run(command)
+    # widows mašine u 16. imaju problem da se file koristi. Vjerojatno node nije zapisao do kraja pa malo spavaj
+    time.sleep(10)
     id = command[3]
     #print('gotov, može file na API',id + '.json')
     ime_datoteke = command[3] + '.json'
@@ -53,8 +55,7 @@ def run_node_script(script_path, *args):
     print('id:',id)
     print('accessibility_score:',accessibility_score)
     #print(json.dumps(audits))
-    # widows mašine u 16. imaju problem da se file koristi. Vjerojatno node nije zapisao do kraja pa malo spavaj
-    time.sleep(30)
+
     sekundi = str((time.time() - start_time))
     sekundi = sekundi.split('.')[0]
     racunalo = socket.gethostname()
@@ -100,6 +101,7 @@ def process_website(index):
             run_node_script(js_module_path, *parameters)
             #print(f"Output for {url}: {output}")
             #print('gotov', url,'sada poslati datotetu na api')
+        print('Završio',b, 'prolaz u niti', index)
 
 
 js_module_path =  os.path.join(os.getcwd(), 'app.mjs')
