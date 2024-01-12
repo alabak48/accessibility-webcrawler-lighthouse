@@ -84,14 +84,14 @@ def process_website(index):
     b=0
     while True:
         b=b+1
-        print(b,'prolaz u niti',index)
+
         response = urlopen('https://ozizprivremeno.xyz/S20_poberiLighthouse.php')
         print('status servera kada se traže nove domene za pobiranje:',response.status)
         if response.status == 200:
             niz = json.loads(response.read())
         else:
             return
-        #print(len(niz))
+        print(b,'prolaz u niti',index, 'server vratio',len(niz),'domena')
         if len(niz) == 0:
             print('Završio ', index)
             return
