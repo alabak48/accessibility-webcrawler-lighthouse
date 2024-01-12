@@ -2,6 +2,7 @@ import concurrent.futures
 import os
 import json
 import subprocess
+import threading
 import time
 from requests_toolbelt.multipart.encoder import MultipartEncoder
 import requests
@@ -17,12 +18,24 @@ def run_node_script(script_path, *args):
     command = ['node', script_path, *map(str, args)]
     #print(command[3] + '.json')
     subprocess.run(command)
-    # widows mašine u 16. imaju problem da se file koristi. Vjerojatno node nije zapisao do kraja pa malo spavaj
-    time.sleep(10)
-    id = command[3]
-    #print('gotov, može file na API',id + '.json')
+
     ime_datoteke = command[3] + '.json'
     file_path = os.path.join(os.getcwd(), ime_datoteke)
+
+    thread = threading.Thread(target=procitaj_json(command[3], file_path, ime_datoteke, start_time))
+    thread.start()
+    thread.join()
+
+    try:
+        os.remove(file_path)
+    except Error as e:
+        print(f"PermissionError: {e}")
+
+
+def procitaj_json(id, file_path, ime_datoteke, start_time):
+    # widows mašine u 16. imaju problem da se file koristi. Vjerojatno node nije zapisao do kraja pa malo spavaj
+    time.sleep(10)
+    #print('gotov, može file na API',id + '.json')
     #print('Datoteka',file_path)
     audits=[]
     accessibility = []
@@ -76,12 +89,13 @@ def run_node_script(script_path, *args):
         headers={'Content-Type': mp_encoder.content_type}
     )
     print(r.text)
-    os.remove(file_path)
+
 
 
 def process_website(index):
     print('krenuo ', index)
     b=0
+
     while True:
         b=b+1
 
@@ -104,7 +118,7 @@ def process_website(index):
         print('Završio',b, 'prolaz u niti', index)
 
 
-js_module_path =  os.path.join(os.getcwd(), 'app.mjs')
+js_module_path = os.path.join(os.getcwd(), 'app.mjs')
 
 max_threads = 15 # 100 ne može nikako, i na 20 se buni
 with concurrent.futures.ThreadPoolExecutor(max_threads) as executor:
