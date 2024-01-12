@@ -53,6 +53,8 @@ def run_node_script(script_path, *args):
     print('id:',id)
     print('accessibility_score:',accessibility_score)
     #print(json.dumps(audits))
+    # widows mašine u 16. imaju problem da se file koristi. Vjerojatno node nije zapisao do kraja pa malo spavaj
+    time.sleep(30)
     sekundi = str((time.time() - start_time))
     sekundi = sekundi.split('.')[0]
     racunalo = socket.gethostname()
@@ -99,7 +101,7 @@ def process_website(index):
 
 js_module_path =  os.path.join(os.getcwd(), 'app.mjs')
 
-max_threads = 10
+max_threads = 50 # 100 ne može nikako
 with concurrent.futures.ThreadPoolExecutor(max_threads) as executor:
     futures = [executor.submit(process_website, index) for index in range(max_threads)]
     concurrent.futures.wait(futures)
