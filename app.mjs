@@ -12,9 +12,9 @@ async function main() {
     console.log('Gotov node', url, ' - ', index);
   } catch (error) {
     console.error("ERROR:", error);
-    //exit(1); // ovo možda ubije python thread pa sam maknuo
+    exit(1); 
   }
-  //exit(0); // ovo možda ubije python thread pa sam maknuo
+  exit(0);
 }
 // Call the main function
 main();
