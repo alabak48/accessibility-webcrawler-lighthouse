@@ -9,11 +9,11 @@ async function main() {
     //console.info("URL:", url);
     //console.info("Index:", index);
     await runLighthouse(url, index);
+    console.log('Gotov node', url, ' - ', index);
   } catch (error) {
     console.error("ERROR:", error);
     //exit(1); // ovo možda ubije python thread pa sam maknuo
   }
-   console.log('Gotov node', url, ' - ', index);
   //exit(0); // ovo možda ubije python thread pa sam maknuo
 }
 // Call the main function
