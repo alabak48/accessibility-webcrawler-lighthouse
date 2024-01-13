@@ -12,7 +12,7 @@ async function main() {
     console.log('Gotov node', url, ' - ', index);
   } catch (error) {
     console.error("ERROR:", error);
-    exit(1); 
+    exit(1);
   }
   exit(0);
 }
