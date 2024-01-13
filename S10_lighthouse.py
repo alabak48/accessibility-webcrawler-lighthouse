@@ -17,14 +17,12 @@ def run_node_script(script_path, *args):
     command = ['node', script_path, *map(str, args)]
     #print(command[3] + '.json')
     subprocess.run(command)
-
     ime_datoteke = command[3] + '.json'
     file_path = os.path.join(os.getcwd(), ime_datoteke)
 
     thread = threading.Thread(target=procitaj_json(command[3], file_path, ime_datoteke, start_time))
     thread.start()
     thread.join()
-
     try:
         os.remove(file_path)
     except Error as e:
@@ -33,9 +31,9 @@ def run_node_script(script_path, *args):
 
 def procitaj_json(id, file_path, ime_datoteke, start_time):
     # widows mašine u 16. imaju problem da se file koristi. Vjerojatno node nije zapisao do kraja pa malo spavaj
-    #time.sleep(5)
+    time.sleep(5)
     #print('gotov, može file na API',id + '.json')
-    #print('Datoteka',file_path)
+    print('Datoteka',file_path)
     svojstvo_accessibility = {
         'accesskeys': 1,
         'aria-allowed-attr': 2,
@@ -107,7 +105,8 @@ def procitaj_json(id, file_path, ime_datoteke, start_time):
         'target-size': 68,
         'label-content-name-mismatch': 69,
         'table-fake-caption': 70,
-        'td-has-header': 71
+        'td-has-header': 71,
+        'offscreen-content-hidden': 72
     }
     svojstvo_audit = {
         'accesskeys': 1,
@@ -280,20 +279,27 @@ def procitaj_json(id, file_path, ime_datoteke, start_time):
     accessibility = []
     accessibility_score=0
     with open(file_path, 'r', encoding='utf-8') as f:
+        #print('Čitam datoteku')
         data = json.load(f)
+        #print(data)
         for d in data:
-           if d=='categories':
-               obj =data.get('categories')
-               for key in obj:
-                   if key=='accessibility':
-                       obj2 = obj.get('accessibility')
-                       accessibility_score=obj2.get('score')
-                       for key2 in obj2:
-                           if key2=='auditRefs':
-                               for k in obj2.get('auditRefs'):
-                                    accessibility.append({'s':svojstvo_accessibility[k['id']],'v':k['weight']})
-           if d =='audits':
-                #print('Našao audits')
+            if d=='categories':
+                obj =data.get('categories')
+                for key in obj:
+                    if key=='accessibility':
+                        obj2 = obj.get('accessibility')
+                        accessibility_score=obj2.get('score')
+                        for key2 in obj2:
+                            if key2=='auditRefs':
+                                for k in obj2.get('auditRefs'):
+                                    #print('----------',k)
+                                    if k['id'] in svojstvo_accessibility:
+                                        kljucsvojstvo = svojstvo_accessibility[k['id']]
+                                    else:
+                                        kljucsvojstvo = k['id']  # ovo na API gledati ako nije broje > 0 onda napraviti insert u bazu pa spremiti novi id
+                                    #print(kljucsvojstvo, k['id'])
+                                    accessibility.append({'s':kljucsvojstvo,'v':k['weight']})
+            if d =='audits':
                 obj = data.get('audits')
                 for key in obj:
                     description=''
@@ -306,12 +312,18 @@ def procitaj_json(id, file_path, ime_datoteke, start_time):
                         scoreDisplayMode=obj.get(key)['scoreDisplayMode']
                     except:
                         pass
-                    audits.append({'s': svojstvo_audit[key], 'v': obj.get(key)['score'],'description': description, 'scoreDisplayMode':scoreDisplayMode})
+                    if key in svojstvo_audit:
+                        kljucsvojstvo=svojstvo_audit[key]
+                    else:
+                        kljucsvojstvo=key # ovo na API gledati ako nije broje > 0 onda napraviti insert u bazu pa spremiti novi id
+                    #print('Ključ svojstvo',kljucsvojstvo,key,description,scoreDisplayMode)
+                    audits.append({'s': kljucsvojstvo, 'v': obj.get(key)['score'],'description': description, 'scoreDisplayMode':scoreDisplayMode})
+                    #print(json.dumps(audits))
     #return result.stdout.strip()
     # šalji na API
-    #print('Komada',len(accessibility))
-    print(json.dumps(accessibility))
-    print(json.dumps(audits))
+    #print('Gotovo čitanje JSON')
+    #print(json.dumps(accessibility))
+    #print(json.dumps(audits))
     #print('id:',id)
     #print('accessibility_score:',accessibility_score)
     #print(json.dumps(audits))

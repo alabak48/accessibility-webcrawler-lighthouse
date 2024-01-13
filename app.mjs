@@ -6,10 +6,7 @@ async function main() {
   try {
     const url = argv[2]; // Retrieve the URL from command-line arguments
     const index = parseInt(argv[3]); // Convert index to an integer
-    //console.info("URL:", url);
-    //console.info("Index:", index);
     await runLighthouse(url, index);
-    console.log('Gotov node', url, ' - ', index);
   } catch (error) {
     console.error("ERROR:", error);
     exit(1);
