@@ -296,13 +296,23 @@ def procitaj_json(id, file_path, ime_datoteke, start_time):
                 #print('Našao audits')
                 obj = data.get('audits')
                 for key in obj:
-                    audits.append({'s': svojstvo_audit[key], 'v': obj.get(key)['score']})
+                    description=''
+                    try:
+                        description=obj.get(key)['description']
+                    except:
+                        pass
+                    scoreDisplayMode = ''
+                    try:
+                        scoreDisplayMode=obj.get(key)['scoreDisplayMode']
+                    except:
+                        pass
+                    audits.append({'s': svojstvo_audit[key], 'v': obj.get(key)['score'],'description': description, 'scoreDisplayMode':scoreDisplayMode})
     #return result.stdout.strip()
     # šalji na API
     #print('Komada',len(accessibility))
     #print(json.dumps(accessibility))
-    print('id:',id)
-    print('accessibility_score:',accessibility_score)
+    #print('id:',id)
+    #print('accessibility_score:',accessibility_score)
     #print(json.dumps(audits))
 
     sekundi = str((time.time() - start_time))
@@ -356,7 +366,7 @@ def process_website(index):
 
 js_module_path = os.path.join(os.getcwd(), 'app.mjs')
 
-max_threads = 15 # 100 ne može nikako, i na 20 se buni
+max_threads = 10 # 100 ne može nikako, i na 20 se buni
 with concurrent.futures.ThreadPoolExecutor(max_threads) as executor:
     futures = [executor.submit(process_website, index) for index in range(max_threads)]
     concurrent.futures.wait(futures)
