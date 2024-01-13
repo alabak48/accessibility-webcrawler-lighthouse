@@ -33,7 +33,7 @@ def run_node_script(script_path, *args):
 
 def procitaj_json(id, file_path, ime_datoteke, start_time):
     # widows mašine u 16. imaju problem da se file koristi. Vjerojatno node nije zapisao do kraja pa malo spavaj
-    time.sleep(5)
+    #time.sleep(5)
     #print('gotov, može file na API',id + '.json')
     #print('Datoteka',file_path)
     svojstvo_accessibility = {
@@ -310,7 +310,8 @@ def procitaj_json(id, file_path, ime_datoteke, start_time):
     #return result.stdout.strip()
     # šalji na API
     #print('Komada',len(accessibility))
-    #print(json.dumps(accessibility))
+    print(json.dumps(accessibility))
+    print(json.dumps(audits))
     #print('id:',id)
     #print('accessibility_score:',accessibility_score)
     #print(json.dumps(audits))
@@ -334,7 +335,7 @@ def procitaj_json(id, file_path, ime_datoteke, start_time):
         data=mp_encoder,
         headers={'Content-Type': mp_encoder.content_type}
     )
-    #print(r.text)
+    print(r.text)
 
 
 
@@ -346,7 +347,7 @@ def process_website(index):
         b=b+1
 
         response = urlopen('https://ozizprivremeno.xyz/S20_poberiLighthouse.php')
-        print('status servera kada se traže nove domene za pobiranje:',response.status)
+        #print('status servera kada se traže nove domene za pobiranje:',response.status)
         if response.status == 200:
             niz = json.loads(response.read())
         else:
