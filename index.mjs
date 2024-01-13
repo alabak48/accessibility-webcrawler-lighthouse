@@ -32,9 +32,12 @@ async function runLighthouse(url, index) {
 
    // fs.writeFileSync(index + '.json', reportJson);
 
-   const writeFile = util.promisify(fs.writeFileSync)
-   writeFile(index + 'json', reportJson).then(() =>chrome.kill();
-   ).catch((err)=>{
+   const writeFile = util.promisify(fs.writeFileSync);
+   writeFile(index + 'json', reportJson)
+   .then(() =>{
+    chrome.kill();
+   })
+   .catch((err)=>{
     console.log(err);
    });
 
