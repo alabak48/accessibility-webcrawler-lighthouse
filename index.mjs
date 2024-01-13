@@ -28,8 +28,16 @@ async function runLighthouse(url, index) {
     // JSON Report
     const reportJson = runnerResult.report;
 
-    fs.writeFileSync(index + '.json', reportJson);
-    chrome.kill();
+   // fs.writeFileSync(index + '.json', reportJson);
+
+    fs.writeFile(index + '.json', reportJson, (err) => {
+      if (err) {
+        console.log(err);
+      }
+      chrome.kill();
+    });
+
+
 
     // `.lhr` is the Lighthouse Result as a JS object
     console.log('Report is done for', runnerResult.lhr.finalUrl);
