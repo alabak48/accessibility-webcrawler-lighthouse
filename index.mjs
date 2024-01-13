@@ -6,6 +6,7 @@ import lighthouse from 'lighthouse';
 
 async function runLighthouse(url, index) {
   const chrome = await launch({ chromeFlags: ['--headless'] });
+  //const chrome = await launch();
   const options = { 
     logLevel: 'error', 
     output: 'json',
@@ -28,8 +29,7 @@ async function runLighthouse(url, index) {
     const reportJson = runnerResult.report;
 
     fs.writeFileSync(index + '.json', reportJson);
-
-    // ovdje ćemo slati podatke na API
+    chrome.kill();
 
     // `.lhr` is the Lighthouse Result as a JS object
     console.log('Report is done for', runnerResult.lhr.finalUrl);
