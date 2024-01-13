@@ -3,6 +3,8 @@
 import fs from 'fs';
 import { launch } from 'chrome-launcher';
 import lighthouse from 'lighthouse';
+import util from 'util';
+
 
 async function runLighthouse(url, index) {
   const chrome = await launch({ chromeFlags: ['--headless'] });
@@ -30,12 +32,11 @@ async function runLighthouse(url, index) {
 
    // fs.writeFileSync(index + '.json', reportJson);
 
-    fs.writeFile(index + '.json', reportJson, (err) => {
-      if (err) {
-        console.log(err);
-      }
-      chrome.kill();
-    });
+   const writeFile = util.promisify(fs.writeFileSync)
+   writeFile(index + 'json', reportJson).then(() =>chrome.kill();
+   ).catch((err)=>{
+    console.log(err);
+   });
 
 
 
