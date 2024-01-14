@@ -1,5 +1,5 @@
 # https://www.digitalocean.com/community/tutorials/python-http-client-request-get-post
-
+import concurrent.futures
 from dns_resolver import resolve
 import http.client
 import ssl
@@ -94,7 +94,7 @@ def process_website_API(index):
             id = data_json.get('id')
             url = posao(data_json.get('naziv'))
             domena = urlparse(url['url']).netloc
-            print('domena', data_json.get('naziv') ,domena)
+            #print('domena', data_json.get('naziv') ,domena)
             if domena.lower().endswith('.hr'):
                 if domena.endswith(data_json.get('naziv').lower()):
                     # idi na server s statusom 2
@@ -112,15 +112,14 @@ def process_website_API(index):
             data = {'id': id, 'status': status, 'url':url['url'], 'ip': url['ip'], 'httpstatus': url['s'], 'contentlength': url['cl'],
                     'poruka': url['p']}
             r=requests.post(url='https://ozizprivremeno.xyz/S32_pohraniURL.php', data=data)
-            print('Vratio API:',r.text)
-            print('Odradio', index, data)
+            print(index,'Vratio API:',r.text, 'podaci:',data)
 
 
 
 
-# max_threads = 1
-# with concurrent.futures.ThreadPoolExecutor(max_threads) as executor:
-#     futures = [executor.submit(process_website_API, index) for index in range(max_threads)]
-#     concurrent.futures.wait(futures)
+max_threads = 1000
+with concurrent.futures.ThreadPoolExecutor(max_threads) as executor:
+    futures = [executor.submit(process_website_API, index) for index in range(max_threads)]
+    concurrent.futures.wait(futures)
 
-process_website_API(1)
+#process_website_API(1)
