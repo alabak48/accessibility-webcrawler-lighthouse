@@ -25,9 +25,9 @@ async function runLighthouse(url, index) {
   };
 
   try {
-    //console.log('Krenuo Lighthouse');
+    console.log('Krenuo Lighthouse');
     const runnerResult = await lighthouse(url, options);
-    //console.log('Odradio Lighthouse');
+    console.log('Odradio Lighthouse');
     // JSON Report
     const reportJson = runnerResult.report;
 
@@ -44,15 +44,15 @@ async function runLighthouse(url, index) {
     console.log(err);
    });
 */
-    //console.log('Idem spremiti JSON',new Date().getMilliseconds());
+    console.log('Idem spremiti JSON',new Date().getMilliseconds());
     fs.writeFileSync(index + '.json', reportJson);
 
-    //console.log('Spremio JSON',new Date().getMilliseconds());
+    console.log('Spremio JSON',new Date().getMilliseconds());
     chrome.kill();
     //console.log('Ubio Chrome',new Date().getMilliseconds());
 
     // `.lhr` is the Lighthouse Result as a JS object
-    //console.log('Report is done for', runnerResult.lhr.finalUrl);
+    console.log('Report is done for', runnerResult.lhr.finalUrl);
   } catch (error) {
     console.error('Error url: ', url);
     console.error('Error running Lighthouse:', error);

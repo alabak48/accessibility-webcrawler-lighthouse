@@ -131,7 +131,7 @@ def process_website(index):
 
 js_module_path = os.path.join(os.getcwd(), 'app.mjs')
 
-max_threads = 10 # 100 ne može nikako, i na 20 se buni
+max_threads = 5 # 100 ne može nikako, i na 20 se buni
 with concurrent.futures.ThreadPoolExecutor(max_threads) as executor:
     futures = [executor.submit(process_website, index) for index in range(max_threads)]
     concurrent.futures.wait(futures)
