@@ -10,6 +10,7 @@ import socket
 from urllib.request import urlopen
 from urllib.parse import urljoin
 from urllib.parse import urlparse
+import ssl
 
 
 def run_node_script(script_path, *args):
@@ -105,12 +106,13 @@ def procitaj_json(id, file_path, ime_datoteke, start_time):
 
 def process_website(index):
     #print('krenuo ', index)
+    context = ssl._create_unverified_context()
     b=0
 
     while True:
         b=b+1
 
-        response = urlopen('https://ozizprivremeno.xyz/S20_poberiLighthouse.php')
+        response = urlopen('https://ozizprivremeno.xyz/S20_poberiLighthouse.php', context=context)
         #print('status servera kada se traže nove domene za pobiranje:',response.status)
         if response.status == 200:
             niz = json.loads(response.read())
